@@ -16,11 +16,11 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             //id -> id tabel
             //title -> judul post
-            //abbreviation -> nama pendek dari judul (untuk memperpendek url nantinya)
+            //slug -> nama pendek dari judul (untuk memperpendek url nantinya)
             //content -> isi blog
             $table->id();
             $table->string('title');
-            $table->string('abbreviation');
+            $table->string('slug');
             $table->text('content');
             $table->timestamps();
         });

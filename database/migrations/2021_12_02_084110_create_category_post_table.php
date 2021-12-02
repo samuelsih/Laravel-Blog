@@ -13,12 +13,12 @@ class CreatePostCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_categories', function (Blueprint $table) {
+        Schema::create('category_post', function (Blueprint $table) {
             //schema untuk hubungan many to many dari tabel posts dan categories
             //post_id ->foreign key untuk ke tabel posts
             //category_id -> foreign key untuk ke tabel categories
-            $table->foreignId('post_id')->constrained('posts');
             $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('post_id')->constrained('posts');
         });
     }
 

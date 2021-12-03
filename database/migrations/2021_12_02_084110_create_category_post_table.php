@@ -13,8 +13,11 @@ class CreateCategoryPostTable extends Migration
      */
     public function up()
     {
+        //schema untuk hubungan many to many dari tabel posts dan categories
+        //untuk menjalankan laravel 'magic', penamaan table yang berelasi harus berurutan abjad, dan dipisah _ (underscore)
+        //jadi harus category_post, bukan post_category
+        //pemberian foreignID di schema juga harus berurutan abjad
         Schema::create('category_post', function (Blueprint $table) {
-            //schema untuk hubungan many to many dari tabel posts dan categories
             //post_id ->foreign key untuk ke tabel posts
             //category_id -> foreign key untuk ke tabel categories
             $table->foreignId('category_id')->constrained('categories');

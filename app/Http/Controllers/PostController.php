@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,8 @@ class PostController extends Controller
     //$post mencari semua post, dengan kategori yang dia punya
     public function index()
     {
-        $posts = Post::with('categories')->latest()->get();
+        //pakai with method untuk menghindari N + 1
+        $posts = Post::with(['categories', 'user'])->latest()->get();
 
         return view('posts.index', compact('posts'));
         // dd('In index');
@@ -22,6 +24,7 @@ class PostController extends Controller
     //method show mencari slug yang sama dengan parameter dan memunculkan tabel post dan category
     public function show($slug)
     {
+        //pakai with method untuk menghindari N + 1
         $post = Post::with('categories')
         ->where('slug', $slug)
         ->get();

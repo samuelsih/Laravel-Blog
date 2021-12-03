@@ -2,36 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function register()
     {
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function registerPost(RegistrationRequest $request)
     {
         //validasi request yang masuk
-        request()->validate([
-            'email' => ['required', 'email', 'unique:users'],
-            'name' => ['required', 'string', 'min:3', 'max:25'],
-            'password' => ['required', 'min:8', 'max:25'],
-        ]);
+        //untuk validasi nya, lihat di file app\Http\Requests
+        $account = $request->all();
 
+        //hash dulu password nya sebelum masuk database
+        $account['password'] = Hash::make($request->password);
 
         //store dalam database
-        User::create([
-            'email' => $request->email,
-            'name' => $request->name,
-            'password' => Hash::make($request->password),
-        ]);
+        User::create($account);
 
 
         //redirect ke post
-        return redirect(route('posts.index'));
+        return redirect()->route('posts.index')->with('success', 'You are registered');
     }
 }

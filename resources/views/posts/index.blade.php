@@ -1,6 +1,13 @@
 @extends('layout.app')
 
 @section('content')
+    @if($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ $message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div>
         <h2 class="fw-bold">Blog</h2>
         <p>This is blog i have made</p>
@@ -9,7 +16,7 @@
     <div class="row">
         @foreach ($posts as $post)
 
-        <div class="col-4">
+        <div class="col-lg-4 mb-3 d-flex align-items-stretch">
             <div class="card">
                 <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                   <img
@@ -20,15 +27,16 @@
                     <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                   </a>
                 </div>
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ $post->title }}</h5>
+                  <h3>Author : {{ $post->user->name }}</h3>
                   @foreach ($post->categories as $category)
                     <span>{{ $category->name }}</span>
                   @endforeach
-                  <p class="card-text">
-                      {{ $post->content }}
+                  <p class="card-text mb-4">
+                      {{ $post->description }}
                   </p>
-                  <a href="{{ route('posts.show', ['slug' => $post->slug]) }}" class="btn btn-primary">Read More</a>
+                  <a href="{{ route('posts.show', ['slug' => $post->slug]) }}" class="btn btn-primary mt-auto align-self-start">Read More</a>
                 </div>
               </div>
         </div>

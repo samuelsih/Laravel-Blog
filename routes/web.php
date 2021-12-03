@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegistrationController;
@@ -22,8 +23,13 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
 
 //Registration
-Route::get('/register', [RegistrationController::class, 'index'])->name('register');
-Route::post('/register', [RegistrationController::class, 'store'])->name('register');
+Route::get('/register', [RegistrationController::class, 'register'])->name('register');
+Route::post('/register', [RegistrationController::class, 'registerPost'])->name('register');
+
+
+//Login
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
 
 //Dashboard
 

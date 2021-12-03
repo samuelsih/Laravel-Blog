@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,8 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Post::factory(5)->create();
-        Category::factory(3)->create();
+        $user = User::factory(3)->create();
+        $category = Category::factory(3)->create();
+        $post = Post::factory(50)->create();
+
     }
 }

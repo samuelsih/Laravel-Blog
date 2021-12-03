@@ -17,12 +17,14 @@ class CreatePostsTable extends Migration
             //id -> id tabel
             //title -> judul post
             //slug -> nama pendek dari judul (untuk memperpendek url nantinya)
+            //description -> deskripsi singkat dari sebuah post
             //content -> isi blog
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('title');
             $table->string('slug');
+            $table->string('description');
             $table->text('content');
-            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

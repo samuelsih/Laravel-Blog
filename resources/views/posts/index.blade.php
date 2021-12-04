@@ -1,16 +1,9 @@
 @extends('layout.app')
 
 @section('content')
-    @if($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ $message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <div>
         <h2 class="fw-bold">Blog</h2>
-        <p>This is blog i have made</p>
+        <p>All posts</p>
     </div>
 
     <div class="row">
@@ -30,9 +23,11 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ $post->title }}</h5>
                   <h3>Author : {{ $post->user->name }}</h3>
+
                   @foreach ($post->categories as $category)
                     <span>{{ $category->name }}</span>
                   @endforeach
+
                   <p class="card-text mb-4">
                       {{ $post->description }}
                   </p>
@@ -43,20 +38,10 @@
 
         @endforeach
     </div>
+    <div class="d-flex justify-content-center">
+        {{ $posts->links() }}
+    </div>
 
-    {{-- @foreach ($posts as $post)
-        <tr>
-            <td> Post -> title :  {{ $post->title }}</td>
-            <td> Post -> slug {{ $post->slug }}</td>
-            <td>
-                <ul>
-                    @foreach ($post->categories as $category)
-                        <li>{{ $category->name }}</li>
-                    @endforeach
-                </ul>
-            </td>
-        </tr>
-    @endforeach --}}
 
 @endsection
 

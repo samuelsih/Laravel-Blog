@@ -15,7 +15,7 @@ class PostController extends Controller
     public function index()
     {
         //pakai with method untuk menghindari N + 1
-        $posts = Post::with(['categories', 'user'])->latest()->get();
+        $posts = Post::with(['categories', 'user'])->latest()->paginate(10);
 
         return view('posts.index', compact('posts'));
         // dd('In index');

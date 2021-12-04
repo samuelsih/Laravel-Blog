@@ -18,7 +18,7 @@ class RegistrationController extends Controller
     {
         //validasi request yang masuk
         //untuk validasi nya, lihat di file app\Http\Requests
-        $account = $request->all();
+        $account = $request->validated();
 
         //hash dulu password nya sebelum masuk database
         $account['password'] = Hash::make($request->password);
@@ -28,6 +28,6 @@ class RegistrationController extends Controller
 
 
         //redirect ke post
-        return redirect()->route('posts.index')->with('success', 'You are registered');
+        return redirect()->route('login')->with('success', 'You are registered');
     }
 }

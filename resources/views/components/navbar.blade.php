@@ -6,26 +6,51 @@
     @endif"
 >
     <div class="container">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+            <li class="nav-item me-lg-5 me-md-3">
               <a class="nav-link fw-bold text-dark" href="{{ route('home') }}">Laravel Blog</a>
             </li>
 
             <li class="nav-item">
+                <form action="#" method="post">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                        <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
 
             </li>
         </ul>
 
+
+
+
+
         <div class="d-flex align-items-center">
             {{-- Jika user sudah login, tampilkan namanya --}}
             @if(Auth::check())
-                <div class="text-dark fw-normal mx-3">Welcome, {{ Auth::user()->name }}</div>
-                <form action="{{ route('logout') }}" method="post">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Hello, {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="{{ route('posts.index', ['username' => Auth::user()->username]) }}">Manage Your Posts</a></li>
+                      <li>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn dropdown-item">
+                                Log out
+                            </button>
+                        </form>
+                    </li>
+                    </ul>
+                </div>
+                {{-- <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-outline-primary px-3 me-2 text-dark">
                         Log out
                     </button>
-                </form>
+                </form> --}}
 
             @else
             {{-- Jika user blum login, tampilkan button login dan register--}}

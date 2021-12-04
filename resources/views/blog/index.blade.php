@@ -22,6 +22,7 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ $post->title }}</h5>
                   <h3>Author : {{ $post->user->name }}</h3>
+                  <h6>Created {{ $post->created_at->diffForHumans() }}</h6>
 
                   @foreach ($post->categories as $category)
                     <span>{{ $category->name }}</span>

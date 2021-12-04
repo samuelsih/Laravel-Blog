@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,12 +33,17 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    //Dashboard untuk orang bikin post dkk
+    //biar bisa nimpa route model binding nya, set
+    Route::resource('/users/{username}/posts', PostController::class);
 });
 
+
 //Home dan post
-Route::get('/posts', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/posts/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/', HomeController::class)->name('home');
 
-//Dashboard
+
 

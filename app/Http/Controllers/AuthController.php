@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         //jika validasi berhasil, redirect ke post
         if(Auth::attempt($accounts)){
-            return redirect()->route('posts.index');
+            return redirect()->route('blog.index');
         }
 
         //jika tidak, throw error ke login.blade.php
@@ -29,13 +29,13 @@ class AuthController extends Controller
             'email' => 'Login failed. Try again',
         ]);
 
-        return redirect()->route('posts.index');
+        return redirect()->route('blog.index');
     }
 
     public function logout()
     {
         Auth::logout();
 
-        return redirect()->route('home');
+        return redirect()->route('blog.index');
     }
 }

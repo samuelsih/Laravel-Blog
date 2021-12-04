@@ -24,6 +24,15 @@
                         </div>
 
                         <div class="form-outline mb-4">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" id="username" class="form-control" value="{{ old('username') }}">
+
+                            @error('username')
+                                <div class="text-danger mt-2">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-outline mb-4">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
 

@@ -28,4 +28,15 @@ class Post extends Model
     {
         return $this->belongsToMany(Category::class, 'category_post');
     }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+    */
+    //set route binding untuk Route::resource('blog/users') untuk mengambil slug, bukan id
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

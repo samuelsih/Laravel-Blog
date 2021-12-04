@@ -3,7 +3,6 @@
 @section('content')
     <div>
         <h2 class="fw-bold">Blog</h2>
-        <p>All posts</p>
     </div>
 
     <div class="row">
@@ -31,7 +30,7 @@
                   <p class="card-text mb-4">
                       {{ $post->description }}
                   </p>
-                  <a href="{{ route('posts.show', ['slug' => $post->slug]) }}" class="btn btn-primary mt-auto align-self-start">Read More</a>
+                  <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="btn btn-primary mt-auto align-self-start">Read More</a>
                 </div>
               </div>
         </div>

@@ -17,7 +17,7 @@
         </ul>
 
         <div class="d-flex align-items-center">
-            {{-- Jika user blum login, tampilkan button login dan register--}}
+            {{-- Jika user sudah login, tampilkan namanya --}}
             @if(Auth::check())
                 <div class="text-dark fw-normal mx-3">Welcome, {{ Auth::user()->name }}</div>
                 <form action="{{ route('logout') }}" method="post">
@@ -28,6 +28,7 @@
                 </form>
 
             @else
+            {{-- Jika user blum login, tampilkan button login dan register--}}
                 <button type="button" class="btn btn-outline-primary px-3 me-2 text-dark">
                     <a href="{{ route('login') }}" class="text-dark text-decoration-none">Log in</a>
                 </button>

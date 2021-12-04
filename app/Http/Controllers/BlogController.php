@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PostController extends Controller
+class BlogController extends Controller
 {
     //method index memunculkan semua post yang ada di blog
     //$post mencari semua post, dengan kategori yang dia punya
@@ -17,7 +17,7 @@ class PostController extends Controller
         //pakai with method untuk menghindari N + 1
         $posts = Post::with(['categories', 'user'])->latest()->paginate(10);
 
-        return view('posts.index', compact('posts'));
+        return view('blog.index', compact('posts'));
         // dd('In index');
     }
 
@@ -29,6 +29,6 @@ class PostController extends Controller
         ->where('slug', $slug)
         ->get();
 
-        return view('posts.show', compact('post'));
+        return view('blog.show', compact('post'));
     }
 }

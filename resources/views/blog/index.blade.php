@@ -1,6 +1,15 @@
 @extends('layout.app')
 
 @section('content')
+    @if($message = Session::get('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ $message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @else
+
+    @endif
+
     <div>
         <h2 class="fw-bold">Blog</h2>
     </div>
@@ -42,6 +51,13 @@
         {{ $posts->links() }}
     </div>
 
+    <script>
+        setTimeout(() => {
+            const alertNode = document.querySelector('.alert')
+            const alert = bootstrap.Alert.getInstance(alertNode)
+            alert.close()
+        }, 1000);
+    </script>
 
 @endsection
 

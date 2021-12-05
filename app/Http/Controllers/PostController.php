@@ -13,10 +13,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($username)
+    public function index()
     {
-        $user = User::where('username', $username)->firstOrFail();
-        return view('dashboard.index', compact('user'));
+
     }
 
     /**
@@ -24,10 +23,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($username)
+    public function create()
     {
-        $user = User::where('username', $username)->value('name');
-        return view('dashboard.create', compact('user'));
+
     }
 
     /**

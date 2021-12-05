@@ -3,9 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,13 +32,13 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'loginPost']);
 });
 
-Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+//saat di route ini, pastikan user lain tidak bisa mengakses username lain yang berbeda dengan user
+//maka tambahkan custom middleware isValidUsername (lihat di file middleware EnsureUsernameIsValid)
+Route::resource('/users/{username}/posts', DashboardController::class)->middleware(['auth', 'isValidUsername']);
 
-    //Dashboard untuk orang bikin post dkk
-    //biar bisa nimpa route model binding nya, set
-    Route::resource('/users/{username}/posts', PostController::class);
-});
+
+//logout user
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 
 //Home dan post

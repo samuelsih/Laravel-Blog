@@ -1,7 +1,5 @@
 @extends('layout.dashboard')
 
-@section('name', $user)
-
 @section('content')
     <div class="text my-3 border-bottom">
         <h2>Create a New Post</h2>
@@ -12,11 +10,19 @@
             @csrf
             <div class="mb-3">
               <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="e.g. : Cara Memasukkan Gajah ke Dalam Kulkas">
+              <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
             </div>
+
             <div class="mb-3">
               <label for="slug" class="form-label">Slug</label>
-              <input type="text" class="form-control" id="slug" name="slug" placeholder="e.g. : noob-master-69">
+              <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" rows="2" class="form-control">
+                    {{ old('description') ?? '' }}
+                </textarea>
             </div>
 
             <div class="mb-3">
@@ -31,7 +37,5 @@
             <button type="submit" class="btn btn-primary">Create</button>
           </form>
     </div>
-
-
 
 @endsection

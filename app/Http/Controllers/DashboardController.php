@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\User;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -25,7 +26,7 @@ class DashboardController extends Controller
         //     return redirect('blog')->with('error', 'Error occured. Please try again');
         // }
 
-        $user = User::where('username', $username)->firstOrFail();
+        $user = User::with(['posts'])->where('username', $username)->latest()->firstOrFail();
         return view('dashboard.index', compact('user'));
     }
 
@@ -36,19 +37,20 @@ class DashboardController extends Controller
      */
     public function create($username)
     {
-        $user = User::where('username', $username)->value('name');
+        $user = User::with(['posts'])->where('username', $username)->latest()->firstOrFail();
         return view('dashboard.create', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\PostRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        dd($request->title, $request->slug, $request->categories);
+        dd($request->title, $request->slug, $request->categories, $request->description);
+        $post = $request->only(['title', 'slug', 'description', 'content']);
     }
 
     /**
@@ -94,5 +96,15 @@ class DashboardController extends Controller
     public function destroy($username)
     {
         //
+    }
+
+    public function makeSlug(Request $request)
+    {
+        //buat slug dari title nya
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+
+        return response()->json([
+            'slug' => $slug,
+        ]);
     }
 }

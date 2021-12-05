@@ -1,7 +1,5 @@
 @extends('layout.dashboard')
 
-@section('name', $user->username)
-
 @section('content')
     <div class="fs-2 text my-3">
         <h1>Your Posts</h1>

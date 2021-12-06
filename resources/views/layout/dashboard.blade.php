@@ -49,6 +49,11 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-file-signature"></i></div>
                                 Create Post
                             </a>
+
+                            <a class="nav-link" href="{{ route('blog.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-angle-double-left"></i></div>
+                                Back To Blog
+                            </a>
                         </div>
                     </div>
                 </nav>
@@ -68,3 +73,5 @@
 
     </body>
 </html>
+
+

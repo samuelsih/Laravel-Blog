@@ -5,6 +5,13 @@
         <h1>Your Posts</h1>
     </div>
 
+    @if($message = Session::get('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ $message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,6 +35,7 @@
 
                 <td>
                     <a href="{{ route('posts.edit', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="btn btn-success">Edit</a>
+                    <a href="{{ route('posts.destroy', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         @endforeach

@@ -133,7 +133,33 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $username)
     {
-        //
+        $categoryID = Category::where('name', $request->category)->value('id');
+        $userID = User::where('username', $username)->value('id');
+
+        if(!$categoryID) {
+            return redirect()->route('posts.create')->withErrors('Error on categories');
+        }
+
+
+
+        //validasi tanpa request karena kita butuh id dari kategori nya
+        $validated = $request->validate([
+            'title' => ['required', 'min:5', 'max:30'],
+            'slug' => ['required', 'min:5', 'max:30'],
+            'description' => ['required', 'min:10', 'max:50'],
+            'content' => ['required', 'min:50', 'max:500'],
+        ]);
+
+        Post::where('slug', $request->slug)->update([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'content' => $request->content,
+            'category_id' => $categoryID,
+            'user_id' => $userID,
+        ]);
+
+        return redirect()->route('posts.index', ['username' => $username])->withSuccess('Edit Success');
     }
 
     /**
@@ -142,7 +168,7 @@ class DashboardController extends Controller
      * @param  string  $username
      * @return \Illuminate\Http\Response
      */
-    public function destroy($username)
+    public function destroy(Request $request, $username)
     {
         //
     }

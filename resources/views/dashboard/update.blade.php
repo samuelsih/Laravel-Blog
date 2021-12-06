@@ -8,6 +8,7 @@
     <div class="col-lg-8">
         <form method="post" action="{{ route('posts.update', ['username' => Auth::user()->username, 'post' => $post->slug]) }}">
             @csrf
+            @method('PUT')
             @error('title')
                 <div class="text-danger mt-2">{{ $message }}</div>
             @enderror

@@ -168,8 +168,10 @@ class DashboardController extends Controller
      * @param  string  $username
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $username)
+    public function destroy($username, $slug)
     {
-        //
+        Post::where('slug', $slug)->delete();
+
+        return redirect()->route('posts.index', ['username' => Auth::user()->username])->withSuccess('Delete Success.');
     }
 }

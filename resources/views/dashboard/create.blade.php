@@ -29,9 +29,8 @@
             @enderror
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" name="description" rows="2" class="form-control" required>
-                    {{ old('description') ?? '' }}
-                </textarea>
+                {{-- kalo textarea ga sebaris, nanti ada whitespace nya --}}
+                <textarea id="description" name="description" rows="2" class="form-control" required>{{ old('description') ?? '' }}</textarea>
             </div>
 
 

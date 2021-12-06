@@ -32,9 +32,7 @@
             @enderror
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" name="description" rows="2" class="form-control" required>
-                    {{ $post->description }}
-                </textarea>
+                <textarea id="description" name="description" rows="2" class="form-control" required>{{ $post->description }}</textarea>
             </div>
 
 
@@ -46,7 +44,6 @@
                 <select class="form-select" name="category">
                     @foreach ($categories as $category)
                         <option
-                        class="{{ $category->name == $post->category->name ? 'active' : '' }}"
                         value={{ $category->name }}>{{ $category->name }}
                     </option>
                     @endforeach

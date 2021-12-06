@@ -34,8 +34,18 @@
                 <td>{{ $post->category->name }}</td>
 
                 <td>
-                    <a href="{{ route('posts.edit', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="btn btn-success">Edit</a>
-                    <a href="{{ route('posts.destroy', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="btn btn-danger">Delete</a>
+                    <a
+                        href="{{ route('posts.edit', ['username' => $post->user->username, 'post' => $post->slug]) }}"
+                        class="btn btn-success me-3"
+                    >
+                        Edit
+                    </a>
+                    <form action="{{ route('posts.destroy', ['username' => $post->user->username, 'post' => $post]) }}" method="post" class="d-inline">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-warning">Delete</button>
+                    </form>
+
                 </td>
             </tr>
         @endforeach

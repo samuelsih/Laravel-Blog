@@ -22,10 +22,10 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');
-            $table->string('title');
-            $table->string('slug');
-            $table->string('description');
-            $table->text('content');
+            $table->string('title', 80);
+            $table->string('slug', 60);
+            $table->text('description');
+            $table->longText('content');
             $table->timestamps();
         });
     }

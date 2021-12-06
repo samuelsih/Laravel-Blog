@@ -7,5 +7,5 @@
 
     <p>{{ $post->user->name }}</p>
 
-    <p>{{ $post->content }}</p>
+    <p>{!! $post->content !!}</p>
 @endsection

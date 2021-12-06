@@ -15,6 +15,8 @@ class Post extends Model
         'slug',
         'description',
         'content',
+        'user_id',
+        'category_id',
     ];
 
     //user() meng-set relasi dari post dan user menjadi one to many
@@ -24,9 +26,9 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class, 'category_post');
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -40,12 +42,5 @@ class Post extends Model
         return 'slug';
     }
 
-    // public function sluggable(): array
-    // {
-    //     return [
-    //         'slug' => [
-    //             'source' => 'title'
-    //         ]
-    //     ];
-    // }
+
 }

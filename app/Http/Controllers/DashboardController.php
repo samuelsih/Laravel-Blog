@@ -17,6 +17,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
     public function __construct()
     {
         $this->middleware(['auth', 'isValidUsername']);
@@ -44,6 +45,7 @@ class DashboardController extends Controller
         return view('dashboard.create', [
             'user' => $user,
             'categories' => $categories,
+            'method' => 'Create',
         ]);
     }
 
@@ -53,36 +55,35 @@ class DashboardController extends Controller
      * @param  \Illuminate\Http\PostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($username, Request $request)
     {
-        //jika tidak ada satupun kategori yang di ceklis, redirect dan beri pesan error
-        if(!$request->filled('name')){
-            return redirect()->route('posts.create', [Auth::user()->username])->with('error', 'Error. Please check at least 1 category');
+        $categoryID = Category::where('name', $request->category)->value('id');
+        $userID = User::where('username', $username)->value('id');
+
+        if(!$categoryID) {
+            return redirect()->route('posts.create')->withErrors('Error on categories');
         }
 
-        $categories = $request->name;
-        $categoriesID = [];
 
-        //cek apakah nama kategori yang di request ada di database
-        foreach($categories as $category) {
-            $query = Category::where('name', $category)->value('id');
 
-            //jika ada nama yang tidak sesuai, kembalikan ke halaman semula
-            if(!$query) {
-                return redirect()->route('posts.create', [Auth::user()->username])->with('error', 'Error. Please check your category');
-            }
+        //validasi tanpa request karena kita butuh id dari kategori nya
+        $validated = $request->validate([
+            'title' => ['required', 'min:5', 'max:30'],
+            'slug' => ['required', 'min:5', 'max:30'],
+            'description' => ['required', 'min:10', 'max:50'],
+            'content' => ['required', 'min:50', 'max:500'],
+        ]);
 
-            //jika ada, simpan ID dari setiap kategori kedalam array
-            else {
-                array_push($categoriesID, $query);
-            }
-        }
+        Post::create([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'content' => $request->content,
+            'category_id' => $categoryID,
+            'user_id' => $userID,
+        ]);
 
-        // dd($categoriesID);
-        $userID = Auth::user()->id;
-        $checkPost = $request->only(['title', 'slug', 'description', 'content']);
-        // $insertPost = Post::create($checkPost);
-
+        return redirect()->route('posts.index', ['username' => $username])->withSuccess('Success!!!');
     }
 
     /**
@@ -128,15 +129,5 @@ class DashboardController extends Controller
     public function destroy($username)
     {
         //
-    }
-
-    public function makeSlug(Request $request)
-    {
-        //buat slug dari title nya
-        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
-
-        return response()->json([
-            'slug' => $slug,
-        ]);
     }
 }

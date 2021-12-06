@@ -24,17 +24,13 @@
 
         @foreach ($user->posts as $post)
             <tr>
-                <th scope="row"></th>
+                <th scope="row">
+                    {{ $loop->index + 1 }}
+                </th>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->description }}</td>
 
-                @foreach ($post->categories as $category)
-                    <td>
-                        <ol>
-                            <li>{{ $category->name }}</li>
-                        </ol>
-                    </td>
-                @endforeach
+                <td>Category</td>
 
                 <td>
                     <a href="#" class="btn btn-primary">Action</a>

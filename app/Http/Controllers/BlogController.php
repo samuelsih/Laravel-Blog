@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+
 use App\Models\Post;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
@@ -14,8 +12,17 @@ class BlogController extends Controller
     //$post mencari semua post, dengan kategori yang dia punya
     public function index()
     {
-        //pakai with method untuk menghindari N + 1
-        $posts = Post::with(['categories', 'user'])->latest()->paginate(10);
+        //jika ada pencarian di navbar, return $posts yang ini
+        if(request('search')) {
+            //%title%
+            $posts = Post::with('category')->where('title', 'like', '%'.request('search').'%')->paginate(10);
+        }
+
+        else {
+            //pakai with method untuk menghindari N + 1
+            $posts = Post::with('category')->latest()->paginate(10);
+        }
+
 
         return view('blog.index', compact('posts'));
         // dd('In index');
@@ -25,9 +32,7 @@ class BlogController extends Controller
     public function show($slug)
     {
         //pakai with method untuk menghindari N + 1
-        $post = Post::with('categories')
-        ->where('slug', $slug)
-        ->get();
+        $post = Post::where('slug', $slug)->firstOrFail();
 
         return view('blog.show', compact('post'));
     }

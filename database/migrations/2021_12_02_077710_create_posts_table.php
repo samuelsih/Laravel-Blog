@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             //content -> isi blog
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('title');
             $table->string('slug');
             $table->string('description');

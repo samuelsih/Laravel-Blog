@@ -1,15 +1,11 @@
 @extends('layout.app')
 
 @section('content')
-    @foreach ($post as $p)
-        <h1>{{ $p->title }}</h1>
+    <h1>{{ $post->title }}</h1>
 
-            @foreach ($p->categories as $category)
-                <p>{{ $category->name }}</p>
-            @endforeach
+    <p>Wrote {{ $post->created_at->diffForHumans() }}</p>
 
-        <p>{{ $p->content }}</p>
+    <p>{{ $post->user->name }}</p>
 
-    @endforeach
-
+    <p>{{ $post->content }}</p>
 @endsection

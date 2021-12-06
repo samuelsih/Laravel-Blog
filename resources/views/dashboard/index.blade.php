@@ -5,12 +5,6 @@
         <h1>Your Posts</h1>
     </div>
 
-    @if($user->posts->isEmpty())
-        <div class="fs-4 text">
-            <h3>You dont have any posts</h3>
-        </div>
-    @else
-
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -22,7 +16,7 @@
             </tr>
         </thead>
 
-        @foreach ($user->posts as $post)
+        @foreach ($posts as $post)
             <tr>
                 <th scope="row">
                     {{ $loop->index + 1 }}
@@ -30,10 +24,10 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->description }}</td>
 
-                <td>Category</td>
+                <td>{{ $post->category->name }}</td>
 
                 <td>
-                    <a href="#" class="btn btn-primary">Action</a>
+                    <a href="{{ route('posts.edit', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="btn btn-success">Edit</a>
                 </td>
             </tr>
         @endforeach
@@ -44,11 +38,6 @@
             </tr>
         </tbody>
     </table>
-
-    @endif
-
-
-
 
 
 @endsection

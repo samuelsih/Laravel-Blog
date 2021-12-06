@@ -29,8 +29,9 @@ class DashboardController extends Controller
         //     return redirect('blog')->with('error', 'Error occured. Please try again');
         // }
 
-        $user = User::with(['posts'])->where('username', $username)->latest()->firstOrFail();
-        return view('dashboard.index', compact('user'));
+        //jangan lupa category nya punya potensi N+1 lur.
+        $posts = Post::with(['user', 'category'])->where('user_id', Auth::user()->id)->get();
+        return view('dashboard.index', compact('posts'));
     }
 
     /**
@@ -103,9 +104,24 @@ class DashboardController extends Controller
      * @param  string  $username
      * @return \Illuminate\Http\Response
      */
-    public function edit($username)
+    public function edit(Request $request, $username)
     {
-        //
+        $userID = User::where('username', $username)->value('id');
+        $slug = $request->post;
+
+        $post = Post::with(['category', 'user'])
+                ->where('slug', $slug)
+                ->where('user_id', $userID)
+                ->first();
+
+        $categories = Category::all();
+
+        return view('dashboard.update', [
+            'post' => $post,
+            'categories' => $categories,
+            'method' => 'Update',
+        ]);
+
     }
 
     /**

@@ -51,8 +51,11 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ $post->title }}</h5>
                   <p class="card-text text-muted fst-italic mb-2">Posted {{ $post->updated_at->diffForHumans() }} by {{ $post->user->name }}</p>
-                  <div class="flex align-items-center">
-                    <span class="badge bg-primary mb-3">{{ $post->category->name }}</span>
+                  <div class="flex align-items-center my-2">
+                    <form action="{{ route('blog.index') }}" method="get">
+                        <input type="hidden" class="form-control" type="text" name="category" value="{{ $post->category->name }}"/>
+                        <button class="badge bg-primary me-3" type="submit">{{ $post->category->name }}</button>
+                    </form>
                   </div>
                   <p class="card-text">{{ $post->description }}</p>
                   <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="btn btn-primary mt-auto">Know More</a>

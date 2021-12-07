@@ -11,6 +11,10 @@
         <h2>@yield('method') a New Post</h2>
     </div>
 
+    @if($message = Session::get('error'))
+        <div class="alert alert-danger my-2">{{ $message }}</div>
+    @endif
+
     @yield('form')
 
 

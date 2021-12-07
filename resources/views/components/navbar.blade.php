@@ -13,7 +13,7 @@
 
             <form action="{{ route('blog.index') }}" method="get">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." name="search"/>
+                    <input class="form-control" type="text" placeholder="Search Title..." name="search"/>
                     <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>

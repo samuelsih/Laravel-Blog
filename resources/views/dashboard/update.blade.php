@@ -2,8 +2,6 @@
 
 @section('method', $method)
 
-
-
 @section('form')
     <div class="col-lg-8">
         <form

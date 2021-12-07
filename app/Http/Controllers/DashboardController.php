@@ -44,6 +44,7 @@ class DashboardController extends Controller
         $categories = Category::all();
         return view('dashboard.create', [
             'user' => $user,
+            'username' => $username,
             'categories' => $categories,
             'method' => 'Create',
         ]);
@@ -61,7 +62,7 @@ class DashboardController extends Controller
         $userID = User::where('username', $username)->value('id');
 
         if(!$categoryID) {
-            return redirect()->route('posts.create')->withErrors('Error on categories');
+            return redirect()->route('posts.create', ['username' => $username])->withErrors('Error on categories');
         }
 
         //validasi tanpa requests controller karena kita butuh id dari kategori nya
@@ -84,17 +85,6 @@ class DashboardController extends Controller
         $dd = Post::create($post);
 
         return redirect()->route('posts.index', ['username' => $username])->withSuccess('Success!!!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $username
-     * @return \Illuminate\Http\Response
-     */
-    public function show($username)
-    {
-        //
     }
 
     /**
@@ -136,7 +126,7 @@ class DashboardController extends Controller
         $userID = User::where('username', $username)->value('id');
 
         if(!$categoryID) {
-            return redirect()->route('posts.create')->withErrors('Error on categories');
+            return redirect()->route('posts.index', ['username' => $username])->with('error', 'Error on categories');
         }
 
         //validasi tanpa request karena kita butuh id dari kategori nya

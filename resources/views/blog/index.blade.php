@@ -38,7 +38,9 @@
         <div class="col-lg-4 mb-3 d-flex align-items-stretch">
             <div class="card" style="width: 23rem;">
                 @if($post->image)
-                    <img src="{{ asset('storage/'.$post->image) }}" class="card-img-top">
+                    <div class="img-container mx-auto" style="width:10rem">
+                        <img src="{{ asset('storage/'.$post->image) }}" class="card-img-top mx-auto">
+                    </div>
                 @else
                     <img
                     src="https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg"
@@ -65,14 +67,6 @@
     <div class="d-flex justify-content-center mt-3">
         {{ $posts->links() }}
     </div>
-
-    <script>
-        setTimeout(() => {
-            const alertNode = document.querySelector('.alert')
-            const alert = bootstrap.Alert.getInstance(alertNode)
-            alert.close()
-        }, 1000);
-    </script>
 
 @endsection
 

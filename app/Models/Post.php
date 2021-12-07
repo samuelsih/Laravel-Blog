@@ -15,6 +15,9 @@ class Post extends Model
         'slug',
         'description',
         'content',
+        'user_id',
+        'image',
+        'category_id',
     ];
 
     //user() meng-set relasi dari post dan user menjadi one to many
@@ -24,28 +27,10 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class, 'category_post');
+        return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-    */
-    //set route binding untuk Route::resource('blog/users') untuk mengambil slug, bukan id
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 
-    // public function sluggable(): array
-    // {
-    //     return [
-    //         'slug' => [
-    //             'source' => 'title'
-    //         ]
-    //     ];
-    // }
 }

@@ -11,19 +11,13 @@
               <a class="nav-link fw-bold text-dark" href="{{ route('home') }}">Laravel Blog</a>
             </li>
 
-            <li class="nav-item">
-                <form action="#" method="post">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                        <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                    </div>
-                </form>
-
-            </li>
+            <form action="{{ route('blog.index') }}" method="get">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search Title..." name="search"/>
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
         </ul>
-
-
-
 
 
         <div class="d-flex align-items-center">

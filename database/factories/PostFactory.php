@@ -19,6 +19,7 @@ class PostFactory extends Factory
             'description' => $this->faker->sentences(3, true),
             'content' => $this->faker->text(500, true),
             'user_id' => $this->faker->numberBetween(1,3),
+            'category_id' => $this->faker->numberBetween(1,3),
         ];
     }
 }

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
@@ -14,10 +12,39 @@ class BlogController extends Controller
     //$post mencari semua post, dengan kategori yang dia punya
     public function index()
     {
-        //pakai with method untuk menghindari N + 1
-        $posts = Post::with(['categories', 'user'])->latest()->paginate(10);
+        //jika ada pencarian di navbar, return $posts yang ini
+        if(request('search')) {
+            //%title%
+            $posts = Post::with(['category', 'user'])->where('title', 'like', '%'.request('search').'%')->paginate(12);
+        }
 
-        return view('blog.index', compact('posts'));
+        //jika ada orang yang click tags category, $post nya ini
+        else if(request('category')) {
+            if(request('category') == 'All') {
+                $posts = Post::with(['category', 'user'])->latest()->paginate(12);
+            }
+
+            else {
+                $req = request('category');
+                $categoryID = Category::where('name', $req)->value('id');
+
+                // dd($req, $categoryID);
+
+                if(!$categoryID) {
+                    return redirect()->route('blog.index')->with('error', 'Category not found.');
+                }
+
+                $posts = Post::with(['category', 'user'])->where('category_id', $categoryID)->paginate(12);
+            }
+        }
+
+        else {
+            //pakai with method untuk menghindari N + 1
+            $posts = Post::with(['category', 'user'])->latest()->paginate(12);
+        }
+
+        $categories = Category::all();
+        return view('blog.index', compact('posts', 'categories'));
         // dd('In index');
     }
 
@@ -25,9 +52,7 @@ class BlogController extends Controller
     public function show($slug)
     {
         //pakai with method untuk menghindari N + 1
-        $post = Post::with('categories')
-        ->where('slug', $slug)
-        ->get();
+        $post = Post::where('slug', $slug)->firstOrFail();
 
         return view('blog.show', compact('post'));
     }

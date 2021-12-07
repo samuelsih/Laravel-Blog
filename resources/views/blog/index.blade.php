@@ -50,8 +50,7 @@
                 @endif
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ $post->title }}</h5>
-                  <h3 class="card-title">Writer : {{ $post->user->name }}</h3>
-                  <p class="card-text">Wrote {{ $post->created_at->diffForHumans() }}</p>
+                  <p class="card-text text-muted fst-italic mb-2">Wrote {{ $post->updated_at->diffForHumans() }} by {{ $post->user->name }}</p>
                   <div class="flex align-items-center">
                     <span class="badge bg-primary mb-3">{{ $post->category->name }}</span>
                   </div>
@@ -59,7 +58,6 @@
                   <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="btn btn-primary mt-auto">Know More</a>
                 </div>
               </div>
-
         </div>
 
         @endforeach

@@ -28,6 +28,7 @@ class PostRequest extends FormRequest
             'slug' => ['required', 'unique:posts', 'min:5', 'max:40'],
             'description' => ['required', 'min:20', 'max:100'],
             'content' => ['required', 'min:50', 'max:1000'],
+            'thumbnail' => ['image', 'file', 'max:2048', 'nullable']
         ];
     }
 }

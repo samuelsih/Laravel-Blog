@@ -17,7 +17,6 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
     public function __construct()
     {
         $this->middleware(['auth', 'isValidUsername']);
@@ -65,24 +64,24 @@ class DashboardController extends Controller
             return redirect()->route('posts.create')->withErrors('Error on categories');
         }
 
-
-
-        //validasi tanpa request karena kita butuh id dari kategori nya
-        $validated = $request->validate([
-            'title' => ['required', 'min:5', 'max:30'],
-            'slug' => ['required', 'min:5', 'max:30'],
-            'description' => ['required', 'min:10', 'max:50'],
-            'content' => ['required', 'min:50', 'max:500'],
+        //validasi tanpa requests controller karena kita butuh id dari kategori nya
+        $post = $request->validate([
+            'title' => ['required', 'min:10', 'max:80'],
+            'slug' => ['required', 'unique:posts', 'min:5', 'max:40'],
+            'description' => ['required', 'max:100'],
+            'content' => ['required', 'max:1000'],
+            'image' => ['image', 'max:2048'],
         ]);
 
-        Post::create([
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'description' => $request->description,
-            'content' => $request->content,
-            'category_id' => $categoryID,
-            'user_id' => $userID,
-        ]);
+        $post['user_id'] = $userID;
+        $post['category_id'] = $categoryID;
+
+        //store gambar jika ada
+        if($request->file('image')) {
+            $post['image'] = $request->file('image')->store('storage');
+        }
+
+        $dd = Post::create($post);
 
         return redirect()->route('posts.index', ['username' => $username])->withSuccess('Success!!!');
     }
@@ -133,6 +132,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $username)
     {
+        dd($request('image'));
         $categoryID = Category::where('name', $request->category)->value('id');
         $userID = User::where('username', $username)->value('id');
 
@@ -140,24 +140,21 @@ class DashboardController extends Controller
             return redirect()->route('posts.create')->withErrors('Error on categories');
         }
 
-
-
         //validasi tanpa request karena kita butuh id dari kategori nya
-        $validated = $request->validate([
-            'title' => ['required', 'min:5', 'max:30'],
+        $post = $request->validate([
+            'title' => ['required', 'min:10', 'max:80'],
             'slug' => ['required', 'min:5', 'max:30'],
-            'description' => ['required', 'min:10', 'max:50'],
-            'content' => ['required', 'min:50', 'max:500'],
+            'description' => ['required', 'max:100'],
+            'content' => ['required', 'max:1000'],
+            'image' => ['image', 'max:2048'],
         ]);
 
-        Post::where('slug', $request->slug)->update([
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'description' => $request->description,
-            'content' => $request->content,
-            'category_id' => $categoryID,
-            'user_id' => $userID,
-        ]);
+        //store gambar jika ada
+        if($request->hasFile('image')) {
+            $post['image'] = $request->file('image')->store('thumbnail-images');
+        }
+
+        Post::where('slug', $request->slug)->update($post);
 
         return redirect()->route('posts.index', ['username' => $username])->withSuccess('Edit Success');
     }
@@ -170,8 +167,12 @@ class DashboardController extends Controller
      */
     public function destroy($username, $slug)
     {
-        Post::where('slug', $slug)->delete();
+        $deletePost = Post::where('slug', $slug)->delete();
 
-        return redirect()->route('posts.index', ['username' => Auth::user()->username])->withSuccess('Delete Success.');
+        if($deletePost) {
+            return redirect()->route('posts.index', ['username' => $username])->withSuccess('Delete Success.');
+        }
+
+        return redirect()->route('posts.index', ['username' => $username])->withErrors('Delete Failed.');
     }
 }

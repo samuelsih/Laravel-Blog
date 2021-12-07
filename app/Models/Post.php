@@ -16,6 +16,7 @@ class Post extends Model
         'description',
         'content',
         'user_id',
+        'image',
         'category_id',
     ];
 
@@ -29,17 +30,6 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-    */
-    //set route binding untuk Route::resource('blog/users') untuk mengambil slug, bukan id
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 
 

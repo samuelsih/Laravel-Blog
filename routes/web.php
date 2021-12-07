@@ -35,7 +35,9 @@ Route::middleware('guest')->group(function () {
 
 //saat di route ini, pastikan user lain tidak bisa mengakses username lain yang berbeda dengan user
 //maka tambahkan custom middleware isValidUsername (lihat di file middleware EnsureUsernameIsValid)
-Route::resource('/users/{username}/posts', DashboardController::class)->middleware(['auth', 'isValidUsername']);
+Route::resource('/users/{username}/posts', DashboardController::class)
+->except('show')
+->middleware(['auth', 'isValidUsername']);
 
 
 //logout user

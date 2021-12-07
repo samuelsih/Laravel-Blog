@@ -20,9 +20,6 @@
         </ul>
 
 
-
-
-
         <div class="d-flex align-items-center">
             {{-- Jika user sudah login, tampilkan namanya --}}
             @if(Auth::check())

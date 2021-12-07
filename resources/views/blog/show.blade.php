@@ -41,6 +41,12 @@
                                     </li>
                                 </form>
                                 @endforeach
+                                <form action="{{ route('blog.index') }}" method="get">
+                                    <li>
+                                        <input type="hidden" class="form-control" type="text" name="category" value="All"/>
+                                        <button class="badge bg-primary me-3" type="submit">All</button>
+                                    </li>
+                                </form>
                             </ul>
                         </div>
                     </div>

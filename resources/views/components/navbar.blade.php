@@ -59,8 +59,9 @@
 
             <a
               class="btn btn-dark px-3"
-              href="#"
+              href="https://github.com/samuelsih/Laravel-Blog/tree/second"
               role="button"
+              rel="noopener noreferrer"
               ><i class="fab fa-github"></i>
             </a>
         </div>

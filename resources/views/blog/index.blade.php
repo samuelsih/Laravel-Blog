@@ -50,7 +50,7 @@
                 @endif
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ $post->title }}</h5>
-                  <p class="card-text text-muted fst-italic mb-2">Wrote {{ $post->updated_at->diffForHumans() }} by {{ $post->user->name }}</p>
+                  <p class="card-text text-muted fst-italic mb-2">Posted {{ $post->updated_at->diffForHumans() }} by {{ $post->user->name }}</p>
                   <div class="flex align-items-center">
                     <span class="badge bg-primary mb-3">{{ $post->category->name }}</span>
                   </div>

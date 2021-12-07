@@ -17,7 +17,7 @@
     <div>
         <h2 class="fw-bold">Blog</h2>
         <div class="d-flex flex-row align-items-center input-group">
-            <p class="me-3 pt-2">Categories : </p>
+            <p class="me-3 pt-2">Select Categories : </p>
             @foreach ($categories as $category)
                 <form action="{{ route('blog.index') }}" method="get">
                     <input type="hidden" class="form-control" type="text" name="category" value="{{ $category->name }}"/>

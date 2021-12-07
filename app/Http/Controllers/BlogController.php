@@ -54,6 +54,8 @@ class BlogController extends Controller
         //pakai with method untuk menghindari N + 1
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        return view('blog.show', compact('post'));
+        $categories = Category::all();
+
+        return view('blog.show', compact('post', 'categories'));
     }
 }

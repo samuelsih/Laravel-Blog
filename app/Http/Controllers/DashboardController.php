@@ -132,7 +132,6 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $username)
     {
-        dd($request('image'));
         $categoryID = Category::where('name', $request->category)->value('id');
         $userID = User::where('username', $username)->value('id');
 

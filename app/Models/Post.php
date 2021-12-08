@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory; 
 
     //$fillable membuat table hanya bisa diisi title dan content saja
     protected $fillable = [

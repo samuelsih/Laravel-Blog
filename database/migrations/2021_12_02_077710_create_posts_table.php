@@ -14,13 +14,8 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            //id -> id tabel
-            //title -> judul post
-            //slug -> nama pendek dari judul (untuk memperpendek url nantinya)
-            //description -> deskripsi singkat dari sebuah post
-            //content -> isi blog
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');
             $table->string('title', 80);
             $table->string('slug', 60);
